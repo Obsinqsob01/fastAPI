@@ -53,6 +53,13 @@ func updateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, tasks[id])
 }
 
+func deleteUser(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	delete(tasks, id)
+
+	return c.NoContent(http.StatusNoContent)
+}
+
 func main() {
 
 }
