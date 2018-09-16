@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/labstack/echo/middleware"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
@@ -61,5 +62,15 @@ func deleteTask(c echo.Context) error {
 }
 
 func main() {
+	e := echo.New()
 
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	e.POST("/users/", createTask)
+	e.GET("/users/:id", getTask)
+	e.PUT("/users/:id", updateTask)
+	e.DELETE("/users/:id", deleteTask)
+
+	e.Logger.Fatal(e.Start(":8080"))
 }
