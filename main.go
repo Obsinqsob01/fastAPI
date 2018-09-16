@@ -7,9 +7,9 @@ import (
 )
 
 type Task struct {
-	id uint `json:"id"`
-	title string `json:"title"`
-	description string `json:"description"`
+	ID uint `json:"id"`
+	Title string `json:"title"`
+	Description string `json:"description"`
 }
 
 var (
@@ -25,7 +25,7 @@ func addTask(ctx echo.Context) error {
 		panic(err)
 	}
 
-	task.id = seq
+	task.ID = seq
 
 	tasks[seq] = task
 
@@ -42,8 +42,8 @@ func updateTask(ctx echo.Context) error {
 
 	task := tasks[uint(u64)]
 
-	task.title = ctx.FormValue("title")
-	task.description = ctx.FormValue("description")
+	task.Title = ctx.FormValue("title")
+	task.Description = ctx.FormValue("description")
 
 	tasks[uint(u64)] = task
 
