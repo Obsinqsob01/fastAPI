@@ -17,7 +17,7 @@ var (
 	tasks map[uint]Task
 )
 
-func addTask(ctx echo.Context) error {
+func AddTask(ctx echo.Context) error {
 	task := Task{}
 
 	err := ctx.Bind(&task)
@@ -34,7 +34,7 @@ func addTask(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, task)
 }
 
-func updateTask(ctx echo.Context) error {
+func UpdateTask(ctx echo.Context) error {
 	u64, err := strconv.ParseUint(ctx.FormValue("id"), 64, 10)
 	if err != nil {
 		panic(err)
@@ -50,7 +50,7 @@ func updateTask(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, task)
 }
 
-func deleteTask(ctx echo.Context) error {
+func DeleteTask(ctx echo.Context) error {
 	u64, err := strconv.ParseUint(ctx.FormValue("id"), 64, 10)
 	if err != nil {
 		panic(err)
@@ -61,11 +61,11 @@ func deleteTask(ctx echo.Context) error {
 	return ctx.NoContent(http.StatusOK)
 }
 
-func getTasks(ctx echo.Context) error {
+func GetTasks(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, tasks)
 }
 
-func getTask(ctx echo.Context) error {
+func GetTask(ctx echo.Context) error {
 	u64, err := strconv.ParseUint(ctx.Param("id"), 64, 10)
 	if err != nil {
 		panic(err)
@@ -77,11 +77,11 @@ func getTask(ctx echo.Context) error {
 func main() {
 	e := echo.New()
 
-	e.POST("/task/add", addTask)
-	e.PUT("/task/update", updateTask)
-	e.DELETE("/task/delete", deleteTask)
-	e.GET("/task/get/all", getTasks)
-	e.GET("/task/get/:id", getTask)
+	e.POST("/task/add", AddTask)
+	e.PUT("/task/update", UpdateTask)
+	e.DELETE("/task/delete", DeleteTask)
+	e.GET("/task/get/all", GetTasks)
+	e.GET("/task/get/:id", GetTask)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
