@@ -67,10 +67,10 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.POST("/users/", createTask)
-	e.GET("/users/:id", getTask)
-	e.PUT("/users/:id", updateTask)
-	e.DELETE("/users/:id", deleteTask)
+	e.POST("/tasks/", createTask)
+	e.GET("/tasks/:id", getTask)
+	e.PUT("/tasks/:id", updateTask)
+	e.DELETE("/tasks/:id", deleteTask)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
