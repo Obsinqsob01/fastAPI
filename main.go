@@ -39,6 +39,20 @@ func getTask(c echo.Context) error {
 	return c.JSON(http.StatusOK, tasks[id])
 }
 
+func updateUser(c echo.Context) error {
+	t := new(task)
+
+	if err := c.Bind(t); err != nil {
+		return err
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	tasks[id].Title = t.Title
+	tasks[id].Description = t.Description
+	
+	return c.JSON(http.StatusOK, tasks[id])
+}
+
 func main() {
 
 }
