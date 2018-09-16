@@ -1,93 +1,39 @@
 package main
 
 import (
-	"strconv"
 	"github.com/labstack/echo"
 	"net/http"
+	"strconv"
 )
 
-// Task data struct to the db model
-type Task struct {
-	ID uint `json:"id"`
-	Title string `json:"title"`
-	Description string `json:"description"`
-}
+type (
+	task struct {
+		ID int `json:"id"`
+		Title string `json:"title"`
+		Description string `json:"description"`
+	}
+)
 
 var (
-	seq uint = 1
-	tasks map[uint]Task
+	tasks = map[int]*task{}
+	seq = 1
 )
 
-// AddTask append a task to the db
-func AddTask(ctx echo.Context) error {
-	task := Task{}
-
-	err := ctx.Bind(&task)
-	if err != nil {
-		panic(err)
+func createTask(c echo.Context) error {
+	t := &task{
+		ID: seq,
 	}
 
-	task.ID = seq
+	if err := c.Bind(t); err != nil {
+		return err
+	}
 
-	tasks[seq] = task
-
+	tasks[t.ID] = t
 	seq++
 
-	return ctx.JSON(http.StatusOK, task)
-}
-
-// UpdateTask update a specific stask based on the id
-func UpdateTask(ctx echo.Context) error {
-	u64, err := strconv.ParseUint(ctx.FormValue("id"), 64, 10)
-	if err != nil {
-		panic(err)
-	}
-
-	task := tasks[uint(u64)]
-
-	task.Title = ctx.FormValue("title")
-	task.Description = ctx.FormValue("description")
-
-	tasks[uint(u64)] = task
-
-	return ctx.JSON(http.StatusOK, task)
-}
-
-// DeleteTask remove a task from the db
-func DeleteTask(ctx echo.Context) error {
-	u64, err := strconv.ParseUint(ctx.FormValue("id"), 64, 10)
-	if err != nil {
-		panic(err)
-	}
-
-	delete(tasks, uint(u64))
-
-	return ctx.NoContent(http.StatusOK)
-}
-
-// GetTasks return all the tasks
-func GetTasks(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, tasks)
-}
-
-// GetTask return a specific task based on the id as param
-func GetTask(ctx echo.Context) error {
-	u64, err := strconv.ParseUint(ctx.Param("id"), 64, 10)
-	if err != nil {
-		panic(err)
-	}
-
-	return ctx.JSON(http.StatusOK, tasks[uint(u64)])
+	return c.JSON(http.StatusCreated, t)
 }
 
 func main() {
-	e := echo.New()
 
-	e.POST("/task/add", AddTask)
-	e.PUT("/task/update", UpdateTask)
-	e.DELETE("/task/delete", DeleteTask)
-	e.GET("/task/get/all", GetTasks)
-	e.GET("/task/get/:id", GetTask)
-
-	e.Logger.Fatal(e.Start(":8080"))
 }
