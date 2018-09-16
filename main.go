@@ -39,7 +39,7 @@ func getTask(c echo.Context) error {
 	return c.JSON(http.StatusOK, tasks[id])
 }
 
-func updateUser(c echo.Context) error {
+func updateTask(c echo.Context) error {
 	t := new(task)
 
 	if err := c.Bind(t); err != nil {
@@ -53,7 +53,7 @@ func updateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, tasks[id])
 }
 
-func deleteUser(c echo.Context) error {
+func deleteTask(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	delete(tasks, id)
 
