@@ -34,6 +34,11 @@ func createTask(c echo.Context) error {
 	return c.JSON(http.StatusCreated, t)
 }
 
+func getTask(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	return c.JSON(http.StatusOK, tasks[id])
+}
+
 func main() {
 
 }
