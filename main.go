@@ -40,6 +40,10 @@ func getTask(c echo.Context) error {
 	return c.JSON(http.StatusOK, tasks[id])
 }
 
+func getTasks(c echo.Context) error {
+	return c.JSON(http.StatusOK, tasks)
+}
+
 func updateTask(c echo.Context) error {
 	t := new(task)
 
@@ -69,6 +73,7 @@ func main() {
 
 	e.POST("/tasks/", createTask)
 	e.GET("/tasks/:id", getTask)
+	e.GET("/tasks/", getTasks)
 	e.PUT("/tasks/:id", updateTask)
 	e.DELETE("/tasks/:id", deleteTask)
 
