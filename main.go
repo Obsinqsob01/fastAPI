@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// Task data struct to the db model
 type Task struct {
 	ID uint `json:"id"`
 	Title string `json:"title"`
@@ -17,6 +18,7 @@ var (
 	tasks map[uint]Task
 )
 
+// AddTask append a task to the db
 func AddTask(ctx echo.Context) error {
 	task := Task{}
 
@@ -34,6 +36,7 @@ func AddTask(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, task)
 }
 
+// UpdateTask update a specific stask based on the id
 func UpdateTask(ctx echo.Context) error {
 	u64, err := strconv.ParseUint(ctx.FormValue("id"), 64, 10)
 	if err != nil {
@@ -50,6 +53,7 @@ func UpdateTask(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, task)
 }
 
+// DeleteTask remove a task from the db
 func DeleteTask(ctx echo.Context) error {
 	u64, err := strconv.ParseUint(ctx.FormValue("id"), 64, 10)
 	if err != nil {
@@ -61,10 +65,12 @@ func DeleteTask(ctx echo.Context) error {
 	return ctx.NoContent(http.StatusOK)
 }
 
+// GetTasks return all the tasks
 func GetTasks(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, tasks)
 }
 
+// GetTask return a specific task based on the id as param
 func GetTask(ctx echo.Context) error {
 	u64, err := strconv.ParseUint(ctx.Param("id"), 64, 10)
 	if err != nil {
