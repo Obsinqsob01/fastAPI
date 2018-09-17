@@ -71,6 +71,10 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
+
 	e.POST("/tasks/", createTask)
 	e.GET("/tasks/:id", getTask)
 	e.GET("/tasks/", getTasks)
