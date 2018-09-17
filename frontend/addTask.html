@@ -6,25 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>fastAPI</title>
 
-    <style>
-        body {
-            color: #444;
-            background-color: whitesmoke;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="bulma.min.css" />
 </head>
 <body>
-    <h1 class="text-center">Añadir una tarea</h1>
+    <nav class="navbar is-danger">
+        <div class="navbar-brand">
+            <a href="/"><h1 class="title is-1 has-text-white">fastAPI</h1></a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <a href="addTask.html">Añadir una tarea</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <input type="text" id="title" placeholder="Ingresa el titulo de la tarea">
+    <div class="container">
+        <h1 class="title is-1 has-text-centered">Añadir una tarea</h1>
 
-    <textarea id="description" placeholder="Describe tu tarea"></textarea>
-
-    <button id="btnAddTask">Añadir</button>
+        <div class="field">
+            <input type="text" class="input" id="title" placeholder="Ingresa el titulo de la tarea">
+    
+            <textarea id="description" class="textarea" placeholder="Describe tu tarea"></textarea>
+            <br>
+            <button id="btnAddTask" class="button">Añadir</button>
+        </div>
+    </div>
 
     <script src="axios.min.js"></script>
     <script>
