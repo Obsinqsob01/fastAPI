@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fastAPI</title>
+
+    <style>
+        body {
+            color: #444;
+            background-color: whitesmoke;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">fastAPI</h1>
+    <ul>
+        <li>
+            <a href="addTask.html">Añadir una tarea</a>
+        </li>
+    </ul>
+
+    <h2 class="text-center">Tasks</h2>
+    <ul id="taskList">
+
+    </ul>
+
+    <script src="axios.min.js"></script>
+    <script>
+        var taskList = document.getElementById("taskList");
+
+        axios.get("http://localhost:8080/tasks/").then(res => {
+            for (const key in res.data) {
+                if (res.data.hasOwnProperty(key)) {
+                    const element = res.data[key];
+                    
+                    taskList.innerHTML += `<li><a href="task.html?id=${element.id}">${element.title}</a></li>`;
+                }
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+    </script>
+</body>
+</html>

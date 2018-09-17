@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fastAPI</title>
+
+    <style>
+        body {
+            color: #444;
+            background-color: whitesmoke;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">Añadir una tarea</h1>
+
+    <input type="text" id="title" placeholder="Ingresa el titulo de la tarea">
+
+    <textarea id="description" placeholder="Describe tu tarea"></textarea>
+
+    <button id="btnAddTask">Añadir</button>
+
+    <script src="axios.min.js"></script>
+    <script>
+    
+        var title = document.getElementById("title");
+        var description = document.getElementById("description");
+        var btnAddTask = document.getElementById("btnAddTask");
+
+        btnAddTask.addEventListener("click", () => {
+            axios.post('http://localhost:8080/tasks/', {
+                title: title.value,
+                description: description.value
+            }).then(res => {
+                alert("La tarea se ha agregado con exito!");
+
+                window.location.href = "index.html"
+
+                title.value = "";
+                description.value = "";
+            }).catch(err => {
+                console.log(err);
+                alert("Ha ocurrido un error");
+            });
+        });
+
+    </script>
+</body>
+</html>

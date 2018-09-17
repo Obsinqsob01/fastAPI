@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fastAPI</title>
+
+    <style>
+        body {
+            color: #444;
+            background-color: whitesmoke;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text-center">fastAPI</h1>
+    <ul>
+        <li>
+            <a href="addTask.html">Añadir una tarea</a>
+        </li>
+    </ul>
+
+    <button id="btnDeleteTask">Eliminar tarea</button>
+
+    <input type="text" id="title" placeholder="Ingresa el titulo de la tarea">
+    <textarea id="description" placeholder="Describe tu tarea"></textarea>
+
+    <button id="btnUpdateTask">Actualizar</button>
+
+    <script src="axios.min.js"></script>
+    <script>
+        var title = document.getElementById("title");
+        var description = document.getElementById("description");
+
+        var btnUpdateTask = document.getElementById("btnUpdateTask");
+        var btnDeleteTask = document.getElementById("btnDeleteTask");
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get("id")
+
+        axios.get(`http://localhost:8080/tasks/${id}`).then(res => {
+            console.log(res.data);
+            title.value = res.data.title;
+            description.value = res.data.description;
+        }).catch(error => {
+            console.log(error);
+        })
+
+        btnUpdateTask.addEventListener("click", () => {
+            axios.put(`http://localhost:8080/tasks/${id}`, {
+                title: title.value,
+                description: description.value
+            }).then(res => {
+                alert("La tarea se ha actualizado con exito!");
+
+                window.location.href = `task.html?id=${id}`
+            }).catch(err => {
+                console.log(err);
+                alert("Ha ocurrido un error");
+            });
+        });
+
+        btnDeleteTask.addEventListener("click", () => {
+            axios.delete(`http://localhost:8080/tasks/${id}`).then(res => {
+                alert("La tarea se ha eliminado con exito!");
+
+                window.location.href = 'index.html'
+            }).catch(err => {
+                console.log(err);
+                alert("Ha ocurrido un error");
+            });
+        });
+    </script>
+</body>
+</html>
